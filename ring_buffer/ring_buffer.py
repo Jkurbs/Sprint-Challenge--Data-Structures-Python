@@ -4,50 +4,48 @@ class Node:
         self.value = value
         self.next_node = next_node
 
-
 class RingBuffer:
     def __init__(self, capacity):
         self.capacity = capacity 
         self.size = 0 
         self.head = None
+        self.data = []
         pass
 
+    class __Full:
+        def append(self, item):
+            self.data[self.cur] = item
+            self.data[-1] = self.data[-1]
+            self.cur = (self.cur+1) % self.capacity
+        def get(self):
+            """ return list of elements in correct order """
+            return self.data[self.cur:]+self.data[:self.cur]
+
     def append(self, item):
-        self.size += 1 
-        current_node = self.head
-        new_node = Node(item)
-
-        # Check for capacity 
-        if self.size > self.capacity: 
-            last_node = self.head.next_node.next_node.next_node.next_node
-            new_node.next_node = self.head.next_node
-            last_node.next_node = new_node
-            self.head = new_node
-            return 
-
-        # Check if it's empty 
-        elif not self.head:
-            self.head = new_node
-            new_node.next_node = self.head
-        else: 
-            while current_node.next_node != self.head: 
-                current_node = current_node.next_node 
-            current_node.next_node = new_node 
-            new_node.next_node = self.head
+        self.data.append(item)
+        if len(self.data) == self.capacity:
+            self.cur = 0
+            # Permanently change self's class from non-full to full
+            self.__class__ = self.__Full
 
     def get(self):
-        current_node = self.head 
-        arr = []
-        while current_node: 
-            print(current_node.value)
-            arr.append(current_node.value)
-            print("array: ", arr)
-            current_node = current_node.next_node
-            if current_node == self.head: 
-                break
-        return arr
+        print(self.data)
+        return self.data
 
-if __name__ == "__main__":
-    ring = RingBuffer(5) 
-    ring.append("a")
-    ring.get()
+# sample usage
+if __name__=='__main__':
+    buffer=RingBuffer(5)
+    
+    buffer.append('a')
+    buffer.append('b')
+    buffer.append('c')
+    buffer.append('d')
+    buffer.append('e')
+    buffer.append('f')
+    buffer.append('g')
+    buffer.append('h')
+    buffer.append('i')
+    buffer.append('j')
+    buffer.append('k')
+
+    print(buffer.get())

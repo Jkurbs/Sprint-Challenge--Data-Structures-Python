@@ -76,7 +76,6 @@ linkedList = LinkedList()
 linkedList.add_to_head(0)
 linkedList.append(1)
 linkedList.append(2)
-linkedList.reverse_list()
 linkedList.print_list()
  
 
