@@ -19,8 +19,8 @@ class RingBuffer:
 
         # Check for capacity 
         if self.size > self.capacity: 
-            last_node = self.head.next_node.next_node.next_node
-            new_node.next_node = self.head
+            last_node = self.head.next_node.next_node.next_node.next_node
+            new_node.next_node = self.head.next_node
             last_node.next_node = new_node
             self.head = new_node
             return 
@@ -37,25 +37,17 @@ class RingBuffer:
 
     def get(self):
         current_node = self.head 
+        arr = []
         while current_node: 
             print(current_node.value)
+            arr.append(current_node.value)
+            print("array: ", arr)
             current_node = current_node.next_node
             if current_node == self.head: 
                 break
+        return arr
 
-ring = RingBuffer(5) 
-
-ring.append(0)
-ring.append(1)
-ring.append(2)
-ring.append(3)
-ring.append(4)
-ring.append(5)
-ring.append(6)
-ring.append(7)
-ring.append(8)
-ring.append(9)
-
-
-
-ring.get()
+if __name__ == "__main__":
+    ring = RingBuffer(5) 
+    ring.append("a")
+    ring.get()
