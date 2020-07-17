@@ -21,6 +21,7 @@ class LinkedList:
         if self.head is not None:
             node.set_next(self.head)
         self.head = node
+
     
 
     def append(self, value): 
@@ -39,44 +40,36 @@ class LinkedList:
     def contains(self, value):
         if not self.head:
             return False
-
         current = self.head
 
         while current:
             if current.get_value() == value:
                 return True
-
             current = current.get_next()
-
         return False
 
-    def reverse_list(self):
+    def reverse_list(self, node, prev):
+        if node is None:
+            self.head = prev
+            return
 
-        def _reverse_list(current, previous): 
-            if not current: 
-                return previous
-            next_node = current.next_node
-            current.next_node = previous
-            previous = current 
-            current = next_node
-            return _reverse_list(current, previous)
-        self.head = _reverse_list(current=self.head, previous=None)
+        next = node.get_next()
+        node.set_next(prev)
+        self.reverse_list(next, node)
 
-
-        
 
     def print_list(self): 
         current_node = self.head 
         while current_node: 
+            
             print("Node: ", current_node.value)
             current_node = current_node.next_node
 
-
 linkedList = LinkedList() 
-linkedList.add_to_head(0)
-linkedList.append(1)
-linkedList.append(2)
+linkedList.add_to_head(5)
+linkedList.append(3)
+linkedList.append(4)
+linkedList.reverse_list(linkedList.head, None)
 linkedList.print_list()
- 
 
 
